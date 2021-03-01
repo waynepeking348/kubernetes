@@ -534,7 +534,7 @@ func (m *ManagerImpl) GetCapacity() (v1.ResourceList, v1.ResourceList, []string)
 			// should always be consistent. Otherwise, we run with the risk
 			// of failing to garbage collect non-existing resources or devices.
 			if !ok {
-				klog.Errorf("unexpected: healthyDevices and endpoints are out of sync")
+				klog.Errorf("unexpected: healthyDevices and endpoints for resources %v are out of sync", resourceName)
 			}
 			delete(m.endpoints, resourceName)
 			delete(m.healthyDevices, resourceName)
@@ -549,7 +549,7 @@ func (m *ManagerImpl) GetCapacity() (v1.ResourceList, v1.ResourceList, []string)
 		eI, ok := m.endpoints[resourceName]
 		if (ok && eI.e.stopGracePeriodExpired()) || !ok {
 			if !ok {
-				klog.Errorf("unexpected: unhealthyDevices and endpoints are out of sync")
+				klog.Errorf("unexpected: unhealthyDevices and endpoints for resources %v are out of sync", resourceName)
 			}
 			delete(m.endpoints, resourceName)
 			delete(m.unhealthyDevices, resourceName)
